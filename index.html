@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Exam Portal - Login</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .body1 {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #fe4fe4, #00f2fe);
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(30, 135, 177, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin: 10px 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 1em;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 90%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 90%;
+    }
+
+    .login {
+      background-color: white;
+      color: rgb(20, 18, 18);
+    }
+
+    .login:hover {
+      background-color: hsl(0, 0%, 93%);
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+
+    .note a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <nav data-aos="fade-down" data-aos-delay="100">
+  <center>
+  <h1><b></b> EXAM SPARK</h1></b></center></nav>
+  
+  <div class="body1">
+  <div class="container">
+    <header>
+      <h2>Online Exam Portal</h2>
+      <p>Login to Start Your Exam</p>
+    </header>
+    <main>
+      <form onsubmit="loginUser(event)">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit" class="btn login">Login</button>
+      </form>
+      <div class="note">
+        Don't have an account? <a href="register.html">Register here</a>
+      </div>
+    </main>
+  </div>
+</div>
+  <script>
+    function loginUser(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+
+      // You could validate or send this data to backend here if needed
+      alert(`Welcome back, ${username}!`);
+      window.location.href = "question.html";
+    }
+  </script>
+</body>
+</html>

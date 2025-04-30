@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Exam Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #acb6e5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+
+    .note a {
+      color: #007BFF;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Online Exam Registration</h2>
+    <p>Register to start your exam</p>
+
+    <form onsubmit="registerAndRedirect(event)">
+      <input type="text" name="fullname" id="fullname" placeholder="Full Name" required />
+      <input type="email" name="email" id="email" placeholder="Email" required />
+
+      <select name="course" id="course" required>
+        <option value="" disabled selected>Select Course</option>
+        <option value="Java">Java</option>
+      </select>
+
+      <button type="submit">Register</button>
+    </form>
+
+  </div>
+
+  <script>
+    function registerAndRedirect(event) {
+      event.preventDefault();
+
+      const fullname = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const course = document.getElementById("course").value;
+
+      // Save to session storage for later use (e.g. in questions page)
+      sessionStorage.setItem("fullname", fullname);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("course", course);
+
+      alert(`✅ Registered successfully for ${course} exam!`);
+      window.location.href = "question.html";
+    }
+  </script>
+</body>
+</html>

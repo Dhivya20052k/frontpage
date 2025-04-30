@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Java Exam</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #cb11cb, #a30f7c);
+      padding: 30px;
+    }
+
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff3333;
+    }
+
+    .timer {
+      text-align: right;
+      font-weight: bold;
+      color: #ff3333;
+      margin-bottom: 15px;
+    }
+
+    .question {
+      margin: 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .question-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin: 5px 0;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="timer" id="timer">Time Left: 1:00</div>
+    <h2>Java Exam</h2>
+    <form id="examForm">
+      <div class="question">
+        <div class="question-title">1. What is JVM?</div>
+        <label><input type="radio" name="q1" value="a"> Java Virtual Machine</label>
+        <label><input type="radio" name="q1" value="b"> Java Variable Method</label>
+        <label><input type="radio" name="q1" value="c"> Joint Virtual Machine</label>
+        <label><input type="radio" name="q1" value="d"> Java Very Method</label>
+      </div>
+
+      <div class="question">
+        <div class="question-title">2. Which OOP concept allows inheritance?</div>
+        <label><input type="radio" name="q2" value="a"> Encapsulation</label>
+        <label><input type="radio" name="q2" value="b"> Abstraction</label>
+        <label><input type="radio" name="q2" value="c"> Inheritance</label>
+        <label><input type="radio" name="q2" value="d"> Polymorphism</label>
+      </div>
+
+      <div class="question">
+        <div class="question-title">3. What is the extension of compiled Java files?</div>
+        <label><input type="radio" name="q3" value="a"> .java</label>
+        <label><input type="radio" name="q3" value="b"> .txt</label>
+        <label><input type="radio" name="q3" value="c"> .class</label>
+        <label><input type="radio" name="q3" value="d"> .exe</label>
+      </div>
+
+      <div class="question">
+        <div class="question-title">4. Which keyword is used to create a subclass?</div>
+        <label><input type="radio" name="q4" value="a"> extends</label>
+        <label><input type="radio" name="q4" value="b"> implements</label>
+        <label><input type="radio" name="q4" value="c"> inherits</label>
+        <label><input type="radio" name="q4" value="d"> super</label>
+      </div>
+
+      <div class="question">
+        <div class="question-title">5. Which is not a Java keyword?</div>
+        <label><input type="radio" name="q5" value="a"> new</label>
+        <label><input type="radio" name="q5" value="b"> void</label>
+        <label><input type="radio" name="q5" value="c"> then</label>
+        <label><input type="radio" name="q5" value="d"> class</label>
+      </div>
+
+      <button type="button" onclick="submitExam()">Submit Exam</button>
+    </form>
+  </div>
+
+  <script>
+    const correctAnswers = {
+      q1: "a", // Java Virtual Machine
+      q2: "c", // Inheritance
+      q3: "c", // .class
+      q4: "a", // extends
+      q5: "c"  // then (not a Java keyword)
+    };
+
+    const fullName = sessionStorage.getItem("fullname") || "Unknown";
+    const email = sessionStorage.getItem("email") || "unknown@example.com";
+    const course = sessionStorage.getItem("course") || "Unknown";
+
+    function submitExam() {
+      let score = 0;
+      const total = Object.keys(correctAnswers).length;
+
+      for (let q in correctAnswers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === correctAnswers[q]) {
+          score++;
+        }
+      }
+
+      const examData = {
+        name: fullName,
+        email: email,
+        course: course,
+        score: score
+      };
+
+      fetch('http://localhost:8080/api/results', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(examData)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("✅ Exam submitted successfully!");
+          window.location.href = "result.html";
+        } else {
+          alert("❌ Failed to submit exam. Try again.");
+        }
+      })
+      .catch(error => {
+        console.error("Error submitting exam:", error);
+        alert("Error submitting exam.");
+      });
+    }
+
+    // Timer (1 minute countdown)
+    let timeLeft = 60;
+    const timerDisplay = document.getElementById("timer");
+
+    const countdown = setInterval(() => {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        submitExam(); // Auto-submit
+      }
+
+      timeLeft--;
+    }, 1000);
+  </script>
+
+</body>
+</html>
